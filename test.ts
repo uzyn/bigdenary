@@ -60,7 +60,33 @@ Deno.test("Initialize with number string", () => {
   assertEquals(bd.base, 12345678n);
   assertEquals(bd.decimals, 8);
 
-  bd = new BigDenary("12345678901234567890123456789012345678901234567890123", 6);
-  assertEquals(bd.base, 12345678901234567890123456789012345678901234567890123000000n);
+  bd = new BigDenary(
+    "12345678901234567890123456789012345678901234567890123",
+    6,
+  );
+  assertEquals(
+    bd.base,
+    12345678901234567890123456789012345678901234567890123000000n,
+  );
+  assertEquals(bd.decimals, 6);
+});
+
+Deno.test("Initialize with bigint", () => {
+  let bd = new BigDenary(BigInt("1234"));
+  assertEquals(bd.base, 123400000000n);
+  assertEquals(bd.decimals, 8);
+
+  bd = new BigDenary(BigInt("1234"), 18);
+  assertEquals(bd.base, 1234000000000000000000n);
+  assertEquals(bd.decimals, 18);
+
+  bd = new BigDenary(
+    12345678901234567890123456789012345678901234567890123n,
+    6,
+  );
+  assertEquals(
+    bd.base,
+    12345678901234567890123456789012345678901234567890123000000n,
+  );
   assertEquals(bd.decimals, 6);
 });
