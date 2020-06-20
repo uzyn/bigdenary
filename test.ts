@@ -46,3 +46,21 @@ Deno.test("Initialize with BigDenary", () => {
   // When input is BigDenary, unable to override decimals
   assertThrows(() => new BigDenary(source, 1), Error, "UnexpectedParameter");
 });
+
+Deno.test("Initialize with number string", () => {
+  let bd = new BigDenary("1234");
+  assertEquals(bd.base, 123400000000n);
+  assertEquals(bd.decimals, 8);
+
+  bd = new BigDenary("1234", 18);
+  assertEquals(bd.base, 1234000000000000000000n);
+  assertEquals(bd.decimals, 18);
+
+  bd = new BigDenary("0.12345678901234", 8);
+  assertEquals(bd.base, 12345678n);
+  assertEquals(bd.decimals, 8);
+
+  bd = new BigDenary("12345678901234567890123456789012345678901234567890123", 6);
+  assertEquals(bd.base, 12345678901234567890123456789012345678901234567890123000000n);
+  assertEquals(bd.decimals, 6);
+});

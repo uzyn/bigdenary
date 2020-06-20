@@ -1,5 +1,7 @@
+const DEFAULT_DECIMALS = 8;
+
 export class BigDenary {
-  base: BigInt;
+  base: bigint;
   decimals: number;
 
   constructor(n: number | string | BigDenary, decimals?: number) {
@@ -11,11 +13,25 @@ export class BigDenary {
       this.base = n.base;
       this.decimals = n.decimals;
     } else if (typeof n === "number") {
-      this.decimals = decimals ? decimals : 8;
+      this.decimals = decimals ? decimals : DEFAULT_DECIMALS;
       this.base = BigInt(Math.floor(n * Math.pow(10, this.decimals)));
+    } else if (typeof n === "string") {
+      this.decimals = decimals ? decimals : DEFAULT_DECIMALS;
+      try {
+        this.base = BigInt(n) * this.decimalMultiplier;
+      } catch {
+        this.base = BigInt(Math.floor(Number.parseFloat(n) * Math.pow(10, this.decimals)));
+      }
     } else {
-      this.base = 0n;
-      this.decimals = 18;
+      throw new Error("UnsupportedInput");
     }
+  }
+
+  get decimalMultiplier(): bigint {
+    let multiplierStr: string = "1";
+    for (let i = 0; i < this.decimals; i += 1) {
+      multiplierStr += "0";
+    }
+    return BigInt(multiplierStr);
   }
 }
