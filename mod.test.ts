@@ -105,22 +105,27 @@ Deno.test("Decimals - scale down", () => {
   let bd = new BigDenary("12345678.1468");
   assertEquals(bd.base, 123456781468n);
   assertEquals(bd.decimals, 4);
+  assertEquals(bd.toString(), "12345678.1468");
 
   bd.scaleDecimalsTo(4);
   assertEquals(bd.base, 123456781468n);
   assertEquals(bd.decimals, 4);
+  assertEquals(bd.toString(), "12345678.1468");
 
   bd.scaleDecimalsTo(3);
   assertEquals(bd.base, 12345678146n);
   assertEquals(bd.decimals, 3);
+  assertEquals(bd.toString(), "12345678.146");
 
   bd.scaleDecimalsTo(1);
   assertEquals(bd.base, 123456781n);
   assertEquals(bd.decimals, 1);
+  assertEquals(bd.toString(), "12345678.1");
 
   bd.scaleDecimalsTo(0);
   assertEquals(bd.base, 12345678n);
   assertEquals(bd.decimals, 0);
+  assertEquals(bd.toString(), "12345678");
 });
 
 /**
@@ -137,13 +142,27 @@ Deno.test("toString()", () => {
   );
 });
 
-// /**
-//  * Operations
-//  */
-// // Deno.test("add()", () => {
-// //   const start = new BigDenary("123456.789");
-// //   assertEquals(start.add("345.959443211"), new BigDenary("123802.748443211"));
-// //   assertEquals(start.add(
-// //     new BigDenary("345.959443211", 26)
-// //   ), new BigDenary("123802.748443211"));
-// // });
+/**
+ * Operations
+ */
+Deno.test("add()", () => {
+  const start = new BigDenary("123456.789");
+
+  assertEquals(start.add("345.959443211"), new BigDenary("123802.748443211"));
+  assertEquals(
+    start.add(
+      new BigDenary("1"),
+    ),
+    new BigDenary("123457.789"),
+  );
+
+  const second = new BigDenary("345.959443211");
+  assertEquals(start.add(second), new BigDenary("123802.748443211"));
+  second.scaleDecimalsTo(42);
+  assertEquals(
+    start.add(second).toString(),
+    "123802.748443211000000000000000000000000000000000",
+  );
+  second.scaleDecimalsTo(1);
+  assertEquals(start.add(second).toString(), "123802.689");
+});

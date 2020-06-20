@@ -50,6 +50,9 @@ export class BigDenary {
     return this._decimals;
   }
 
+  /**
+   * Alters the decimal places, actual underlying value does not change
+   */
   scaleDecimalsTo(_decimals: number) {
     if (_decimals > this._decimals) {
       this.base = this.base *
@@ -80,9 +83,12 @@ export class BigDenary {
     const curr = new BigDenary(this);
     const oper = new BigDenary(operand);
     const targetDecs = Math.max(curr.decimals, oper.decimals);
-    // curr.decimals = targetDecs;
-    // oper.decimals = targetDecs;
+    curr.scaleDecimalsTo(targetDecs);
+    oper.scaleDecimalsTo(targetDecs);
 
-    return oper;
+    return new BigDenary({
+      base: curr.base + oper.base,
+      decimals: targetDecs,
+    });
   }
 }
