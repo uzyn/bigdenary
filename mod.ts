@@ -7,6 +7,10 @@ interface BigDenaryRaw {
 
 type NumberInput = number | string | bigint | BigDenary | BigDenaryRaw;
 
+function isBigDenaryRaw(input: BigDenaryRaw): input is BigDenaryRaw {
+  return true;
+}
+
 export class BigDenary {
   base: bigint;
   private _decimals: number;
@@ -22,8 +26,11 @@ export class BigDenary {
       this._decimals = getDecimals(n);
       this.base = BigInt(n.replace(".", ""));
     } else if (typeof n === "bigint") {
-      this._decimals = 0;
       this.base = n * this.decimalMultiplier;
+      this._decimals = 0;
+    } else if (isBigDenaryRaw(n)) {
+      this.base = n.base;
+      this._decimals = n.decimals;
     } else {
       throw new Error("UnsupportedInput");
     }

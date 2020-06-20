@@ -78,6 +78,16 @@ Deno.test("Instantiate with bigint", () => {
   assertEquals(bd.decimals, 0);
 });
 
+Deno.test("Instantiate with BigDenaryRaw", () => {
+  let bd = new BigDenary({
+    base: 2342034809823948929384234n,
+    decimals: 15,
+  });
+  assertEquals(bd.base, 2342034809823948929384234n);
+  assertEquals(bd.decimals, 15);
+  assertEquals(bd.toString(), "2342034809.823948929384234");
+});
+
 /**
  * Decimal scaling
  */
