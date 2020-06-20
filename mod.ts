@@ -59,7 +59,6 @@ export class BigDenary {
   }
 
   get decimalMultiplier(): bigint {
-    4;
     return BigDenary.getDecimalMultiplier(this._decimals);
   }
 
