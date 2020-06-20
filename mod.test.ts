@@ -140,6 +140,18 @@ Deno.test("toString()", () => {
     (new BigDenary("12345678.146865819819462135498494214984")).toString(),
     "12345678.146865819819462135498494214984",
   );
+  assertEquals(
+    (new BigDenary("0.123")).toString(),
+    "0.123",
+  );
+  assertEquals(
+    (new BigDenary("123984654")).toString(),
+    "123984654",
+  );
+  assertEquals(
+    (new BigDenary("0")).toString(),
+    "0",
+  );
 });
 
 /**
@@ -165,4 +177,7 @@ Deno.test("add()", () => {
   );
   second.scaleDecimalsTo(1);
   assertEquals(start.add(second).toString(), "123802.689");
+
+  // Number input
+  assertEquals(start.add(2.5).toString(), "123459.289");
 });

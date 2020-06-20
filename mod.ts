@@ -39,7 +39,15 @@ export class BigDenary {
   toString(): string {
     const baseStr = this.base.toString();
     const position = baseStr.length - this._decimals;
-    return `${baseStr.substr(0, position)}.${baseStr.substr(position)}`;
+    const pre = baseStr.substr(0, position);
+    const post = baseStr.substr(position);
+    
+    if (pre.length === 0) {
+      return `0.${post}`;
+    } else if (post.length === 0) {
+      return `${pre}`;
+    }
+    return `${pre}.${post}`;
   }
 
   valueOf(): number {
