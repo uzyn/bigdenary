@@ -1,4 +1,7 @@
-import { assertEquals, assertThrows } from "https://deno.land/std/testing/asserts.ts";
+import {
+  assertEquals,
+  assertThrows,
+} from "https://deno.land/std/testing/asserts.ts";
 import { getDecimals } from "./util.ts";
 
 Deno.test("getDecimals() with string input", () => {

@@ -159,16 +159,3 @@ Deno.test("toString()", () => {
     "12345678.1468000000000000000000000",
   );
 });
-
-Deno.test("valueOf()", () => {
-  assertEquals(
-    (new BigDenary("12345678.1468")).valueOf(),
-    12345678.1468,
-  );
-  assertEquals((new BigDenary("12345678.1468", 2)).valueOf(), 12345678.14);
-  assertEquals(
-    (new BigDenary("12345678.1468", 25)).valueOf(),
-    12345678.1468000000000000000000000,
-  );
-  assertEquals((new BigDenary("12345678", 5)).valueOf(), 12345678);
-});
