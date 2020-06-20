@@ -47,11 +47,19 @@ Deno.test("Round down when initializing with float", () => {
 
 Deno.test("Initialize with BigDenary", () => {
   const source = new BigDenary(1234.56);
-  const bd = new BigDenary(source);
+  let bd = new BigDenary(source);
   assertEquals(bd, source);
+  assertEquals(bd.decimals, 8);
 
-  // When input is BigDenary, unable to override decimals
-  assertThrows(() => new BigDenary(source, 1), Error, "UnexpectedParameter");
+  // Scale down
+  bd = new BigDenary(source, 1);
+  assertEquals(bd.base, 12345n);
+  assertEquals(bd.decimals, 1);
+
+  // Scale up
+  bd = new BigDenary(source, 12);
+  assertEquals(bd.base, 1234560000000000n);
+  assertEquals(bd.decimals, 12);
 });
 
 Deno.test("Initialize with number string", () => {

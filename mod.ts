@@ -10,12 +10,11 @@ export class BigDenary {
     }
 
     if (n instanceof BigDenary) {
-      // TODO: Support scaling
-      if (decimals) {
-        throw new Error("UnexpectedParameter");
-      }
       this.base = n.base;
       this._decimals = n.decimals;
+      if (decimals) {
+        this.decimals = decimals; // scale
+      }
     } else if (typeof n === "number") {
       this._decimals = decimals ? decimals : DEFAULT_DECIMALS;
       this.base = BigInt(Math.floor(n * Math.pow(10, this._decimals)));
