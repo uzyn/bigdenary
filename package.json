@@ -1,0 +1,29 @@
+{
+  "name": "bigdenary",
+  "version": "0.0.1",
+  "description": "Arbitrary-length decimal implementation ES module (ESM) with native BigInt",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uzyn/bigdenary.git"
+  },
+  "keywords": [
+    "bignum",
+    "bignumber",
+    "bigint",
+    "decimal",
+    "decimals",
+    "bigdecimal",
+    "bigdecimals",
+    "typescript",
+    "deno",
+    "esm",
+    "no-dependencies"
+  ],
+  "author": "U-Zyn Chua <chua@uzyn.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/uzyn/bigdenary/issues"
+  },
+  "homepage": "https://github.com/uzyn/bigdenary#readme"
+}
