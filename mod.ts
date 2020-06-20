@@ -39,6 +39,10 @@ export class BigDenary {
     return `${baseStr.substr(0, position)}.${baseStr.substr(position)}`;
   }
 
+  valueOf(): number {
+    return Number.parseFloat(this.toString());
+  }
+
   get decimals(): number {
     return this._decimals;
   }
