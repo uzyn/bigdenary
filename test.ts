@@ -4,6 +4,10 @@ import {
 } from "https://deno.land/std/testing/asserts.ts";
 import { BigDenary } from "./mod.ts";
 
+/** 
+ * Initializers
+ */
+
 Deno.test("Initialize with integer (number)", () => {
   const bd1 = new BigDenary(1234);
   assertEquals(bd1.base, 123400000000n);
@@ -12,6 +16,9 @@ Deno.test("Initialize with integer (number)", () => {
   const bd2 = new BigDenary(1234, 18);
   assertEquals(bd2.base, 1234000000000000000000n);
   assertEquals(bd2.decimals, 18);
+
+  // Decimals cannot be < 0
+  assertThrows(() => new BigDenary(1234, -1), Error, "DecimalsMustBePositive");
 });
 
 Deno.test("Initialize with decimal/float", () => {
@@ -40,11 +47,19 @@ Deno.test("Round down when initializing with float", () => {
 
 Deno.test("Initialize with BigDenary", () => {
   const source = new BigDenary(1234.56);
-  const bd = new BigDenary(source);
+  let bd = new BigDenary(source);
   assertEquals(bd, source);
+  assertEquals(bd.decimals, 8);
 
-  // When input is BigDenary, unable to override decimals
-  assertThrows(() => new BigDenary(source, 1), Error, "UnexpectedParameter");
+  // Scale down
+  bd = new BigDenary(source, 1);
+  assertEquals(bd.base, 12345n);
+  assertEquals(bd.decimals, 1);
+
+  // Scale up
+  bd = new BigDenary(source, 12);
+  assertEquals(bd.base, 1234560000000000n);
+  assertEquals(bd.decimals, 12);
 });
 
 Deno.test("Initialize with number string", () => {
@@ -89,4 +104,39 @@ Deno.test("Initialize with bigint", () => {
     12345678901234567890123456789012345678901234567890123000000n,
   );
   assertEquals(bd.decimals, 6);
+});
+
+/**
+ * Decimal scaling
+ */
+Deno.test("Decimals - scale up", () => {
+  let bd = new BigDenary("12345678");
+  assertEquals(bd.base, 1234567800000000n);
+  assertEquals(bd.decimals, 8);
+
+  bd.decimals = 12;
+  assertEquals(bd.base, 12345678000000000000n);
+  assertEquals(bd.decimals, 12);  
+});
+
+Deno.test("Decimals - scale down", () => {
+  let bd = new BigDenary("12345678.1468");
+  assertEquals(bd.base, 1234567814680000n);
+  assertEquals(bd.decimals, 8);
+
+  bd.decimals = 4;
+  assertEquals(bd.base, 123456781468n);
+  assertEquals(bd.decimals, 4);
+
+  bd.decimals = 3;
+  assertEquals(bd.base, 12345678146n);
+  assertEquals(bd.decimals, 3);
+
+  bd.decimals = 1;
+  assertEquals(bd.base, 123456781n);
+  assertEquals(bd.decimals, 1);
+
+  bd.decimals = 0;
+  assertEquals(bd.base, 12345678n);
+  assertEquals(bd.decimals, 0);
 });
