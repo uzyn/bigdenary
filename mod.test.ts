@@ -5,16 +5,16 @@ import {
 import { BigDenary } from "./mod.ts";
 
 /** 
- * Initializers
+ * Constructors
  */
 
-Deno.test("Initialize with integer (number)", () => {
+Deno.test("Instantiate with integer (number)", () => {
   const bd = new BigDenary(1234);
   assertEquals(bd.base, 1234n);
   assertEquals(bd.decimals, 0);
 });
 
-Deno.test("Initialize with decimal/float", () => {
+Deno.test("Instantiate with decimal/float", () => {
   let bd = new BigDenary(12.34);
   assertEquals(bd.base, 1234n);
   assertEquals(bd.decimals, 2);
@@ -28,14 +28,14 @@ Deno.test("Initialize with decimal/float", () => {
   assertEquals(bd.decimals, 7);
 });
 
-Deno.test("Initialize with BigDenary", () => {
+Deno.test("Instantiate with BigDenary", () => {
   const source = new BigDenary(1234.56);
   const bd = new BigDenary(source);
   assertEquals(bd, source);
   assertEquals(bd.decimals, 2);
 });
 
-Deno.test("Initialize with number string", () => {
+Deno.test("Instantiate with number string", () => {
   let bd = new BigDenary("1234");
   assertEquals(bd.base, 1234n);
   assertEquals(bd.decimals, 0);
@@ -55,7 +55,9 @@ Deno.test("Initialize with number string", () => {
   );
   assertEquals(bd.decimals, 0);
 
-  bd = new BigDenary("12345678901234567890123456789.06589426959512345678901234567890123");
+  bd = new BigDenary(
+    "12345678901234567890123456789.06589426959512345678901234567890123",
+  );
   assertEquals(
     bd.base,
     1234567890123456789012345678906589426959512345678901234567890123n,
@@ -63,7 +65,7 @@ Deno.test("Initialize with number string", () => {
   assertEquals(bd.decimals, 35);
 });
 
-Deno.test("Initialize with bigint", () => {
+Deno.test("Instantiate with bigint", () => {
   let bd = new BigDenary(BigInt("1234"));
   assertEquals(bd.base, 1234n);
   assertEquals(bd.decimals, 0);

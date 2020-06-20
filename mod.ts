@@ -75,7 +75,7 @@ export class BigDenary {
     const targetDecs = Math.max(curr.decimals, oper.decimals);
     // curr.decimals = targetDecs;
     // oper.decimals = targetDecs;
-    
+
     return oper;
   }
 }
