@@ -36,9 +36,20 @@ export class BigDenary {
     return this._decimals;
   }
 
+  set decimals(_decimals: number) {
+    if (_decimals > this._decimals) {
+      this.base = this.base * BigDenary.getDecimalMultiplier(_decimals - this._decimals);
+    }
+    this._decimals = _decimals;
+  }
+
   get decimalMultiplier(): bigint {
+    return BigDenary.getDecimalMultiplier(this._decimals);
+  }
+
+  static getDecimalMultiplier(decimals: number): bigint {
     let multiplierStr: string = "1";
-    for (let i = 0; i < this._decimals; i += 1) {
+    for (let i = 0; i < decimals; i += 1) {
       multiplierStr += "0";
     }
     return BigInt(multiplierStr);

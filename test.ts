@@ -98,3 +98,12 @@ Deno.test("Initialize with bigint", () => {
 /**
  * Decimal scaling
  */
+Deno.test("Decimals - scaling up", () => {
+  let bd = new BigDenary("12345678");
+  assertEquals(bd.base, 1234567800000000n);
+  assertEquals(bd.decimals, 8);
+
+  bd.decimals = 12;
+  assertEquals(bd.base, 12345678000000000000n);
+  assertEquals(bd.decimals, 12);  
+});
