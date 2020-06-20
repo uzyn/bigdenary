@@ -16,6 +16,9 @@ Deno.test("Initialize with integer (number)", () => {
   const bd2 = new BigDenary(1234, 18);
   assertEquals(bd2.base, 1234000000000000000000n);
   assertEquals(bd2.decimals, 18);
+
+  // Decimals cannot be < 0
+  assertThrows(() => new BigDenary(1234, -1), Error, "DecimalsMustBePositive");
 });
 
 Deno.test("Initialize with decimal/float", () => {

@@ -5,6 +5,10 @@ export class BigDenary {
   private _decimals: number;
 
   constructor(n: number | string | bigint | BigDenary, decimals?: number) {
+    if (decimals && decimals < 0) {
+      throw new Error("DecimalsMustBePositive");
+    }
+
     if (n instanceof BigDenary) {
       // TODO: Support scaling
       if (decimals) {
@@ -45,7 +49,7 @@ export class BigDenary {
     this._decimals = _decimals;
   }
 
-  get decimalMultiplier(): bigint {
+  get decimalMultiplier(): bigint {4
     return BigDenary.getDecimalMultiplier(this._decimals);
   }
 
