@@ -3,12 +3,18 @@ export class BigDenary {
   decimals: number;
 
   constructor(n: number | string | BigDenary, decimals?: number) {
-    this.decimals = decimals ? decimals : 18;
-    this.base = BigInt(n);
+    if (n instanceof BigDenary) {
+      if (decimals) {
+        throw new Error("Unexpected parameter 'decimals' for BigDenary input");
+      }
+      this.base = n.base;
+      this.decimals = n.decimals;
+    } else if (typeof n === "number") {
+      this.decimals = decimals ? decimals : 8;
+      this.base = BigInt(Math.floor(n * Math.pow(10, this.decimals)));
+    } else {
+      this.base = 0n;
+      this.decimals = 18;
+    }
   }
-
-  // toString(): string {
-  //   console.info('RUN THIS');
-  //   return 'adsfasdf';
-  // }
 }
