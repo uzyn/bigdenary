@@ -39,6 +39,8 @@ export class BigDenary {
   set decimals(_decimals: number) {
     if (_decimals > this._decimals) {
       this.base = this.base * BigDenary.getDecimalMultiplier(_decimals - this._decimals);
+    } else if (_decimals < this._decimals) {
+      this.base = this.base / BigDenary.getDecimalMultiplier(this._decimals - _decimals);
     }
     this._decimals = _decimals;
   }
