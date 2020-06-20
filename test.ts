@@ -1,4 +1,7 @@
-import { assertEquals, assertThrows } from "https://deno.land/std/testing/asserts.ts";
+import {
+  assertEquals,
+  assertThrows,
+} from "https://deno.land/std/testing/asserts.ts";
 import { BigDenary } from "./mod.ts";
 
 Deno.test("Initialize with integer (number)", () => {
@@ -43,4 +46,3 @@ Deno.test("Initialize with BigDenary", () => {
   // When input is BigDenary, unable to override decimals
   assertThrows(() => new BigDenary(source, 1), Error, "UnexpectedParameter");
 });
-
