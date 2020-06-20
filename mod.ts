@@ -1,32 +1,28 @@
 import { getDecimals } from "./util.ts";
 
-const DEFAULT_DECIMALS = 20;
+interface BigDenaryRaw {
+  base: bigint;
+  decimals: number;
+}
+
+type NumberInput = number | string | bigint | BigDenary | BigDenaryRaw;
 
 export class BigDenary {
   base: bigint;
   private _decimals: number;
 
-  constructor(n: number | string | bigint | BigDenary, decimals?: number) {
-    if (decimals && decimals < 0) {
-      throw new Error("DecimalsMustBePositive");
-    }
-
+  constructor(n: NumberInput) {
     if (n instanceof BigDenary) {
       this.base = n.base;
       this._decimals = n.decimals;
-      if (decimals) {
-        this.decimals = decimals; // scale
-      }
     } else if (typeof n === "number") {
       this._decimals = getDecimals(n);
       this.base = BigInt(n * Math.pow(10, this._decimals));
-      this.decimals = decimals ? decimals : DEFAULT_DECIMALS;
     } else if (typeof n === "string") {
       this._decimals = getDecimals(n);
       this.base = BigInt(n.replace(".", ""));
-      this.decimals = decimals ? decimals : DEFAULT_DECIMALS;
     } else if (typeof n === "bigint") {
-      this._decimals = decimals ? decimals : DEFAULT_DECIMALS;
+      this._decimals = 0;
       this.base = n * this.decimalMultiplier;
     } else {
       throw new Error("UnsupportedInput");
@@ -47,7 +43,7 @@ export class BigDenary {
     return this._decimals;
   }
 
-  set decimals(_decimals: number) {
+  scaleDecimalsTo(_decimals: number) {
     if (_decimals > this._decimals) {
       this.base = this.base *
         BigDenary.getDecimalMultiplier(_decimals - this._decimals);
@@ -68,5 +64,18 @@ export class BigDenary {
       multiplierStr += "0";
     }
     return BigInt(multiplierStr);
+  }
+
+  /**
+   * Operations
+   */
+  add(operand: NumberInput): BigDenary {
+    const curr = new BigDenary(this);
+    const oper = new BigDenary(operand);
+    const targetDecs = Math.max(curr.decimals, oper.decimals);
+    // curr.decimals = targetDecs;
+    // oper.decimals = targetDecs;
+    
+    return oper;
   }
 }
