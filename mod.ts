@@ -43,12 +43,12 @@ export class BigDenary {
     if (this.base === 0n) {
       return "0";
     }
-    
+
     const baseStr = this.base.toString();
     const position = baseStr.length - this._decimals;
     const pre = baseStr.substr(0, position);
     const post = baseStr.substr(position);
-    
+
     if (pre.length === 0) {
       return `0.${post}`;
     } else if (post.length === 0) {
@@ -94,7 +94,7 @@ export class BigDenary {
   /**
    * Operations
    */
-  add(operand: NumberInput): BigDenary {
+  plus(operand: NumberInput): BigDenary {
     const curr = new BigDenary(this);
     const oper = new BigDenary(operand);
     const targetDecs = Math.max(curr.decimals, oper.decimals);
@@ -107,14 +107,25 @@ export class BigDenary {
     });
   }
 
+  minus(operand: NumberInput): BigDenary {
+    return this.plus((new BigDenary(operand)).negated());
+  }
+
   multipliedBy(operand: NumberInput): BigDenary {
     const curr = new BigDenary(this);
     const oper = new BigDenary(operand);
     const targetDecs = curr.decimals + oper.decimals;
-    
+
     return new BigDenary({
       base: curr.base * oper.base,
       decimals: targetDecs,
+    });
+  }
+
+  negated(): BigDenary {
+    return new BigDenary({
+      base: this.base * -1n,
+      decimals: this.decimals,
     });
   }
 }

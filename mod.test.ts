@@ -160,27 +160,35 @@ Deno.test("toString()", () => {
 Deno.test("add()", () => {
   const start = new BigDenary("123456.789");
 
-  assertEquals(start.add("0"), start);
-  assertEquals(start.add("345.959443211"), new BigDenary("123802.748443211"));
+  assertEquals(start.plus("0"), start);
+  assertEquals(start.plus("345.959443211"), new BigDenary("123802.748443211"));
   assertEquals(
-    start.add(
+    start.plus(
       new BigDenary("1"),
     ),
     new BigDenary("123457.789"),
   );
 
   const second = new BigDenary("345.959443211");
-  assertEquals(start.add(second), new BigDenary("123802.748443211"));
+  assertEquals(start.plus(second), new BigDenary("123802.748443211"));
   second.scaleDecimalsTo(42);
   assertEquals(
-    start.add(second).toString(),
+    start.plus(second).toString(),
     "123802.748443211000000000000000000000000000000000",
   );
   second.scaleDecimalsTo(1);
-  assertEquals(start.add(second).toString(), "123802.689");
+  assertEquals(start.plus(second).toString(), "123802.689");
 
   // Number input
-  assertEquals(start.add(2.5).toString(), "123459.289");
+  assertEquals(start.plus(2.5).toString(), "123459.289");
+});
+
+Deno.test("minus()", () => {
+  const start = new BigDenary("123456.789");
+  assertEquals(start.minus(0).toString(), "123456.789");
+  assertEquals(start.minus(1).toString(), "123455.789");
+  assertEquals(start.minus(2).toString(), "123454.789");
+  assertEquals(start.minus(-1).toString(), "123457.789");
 });
 
 Deno.test("multipliedBy()", () => {
