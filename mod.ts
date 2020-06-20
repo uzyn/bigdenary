@@ -1,4 +1,6 @@
-const DEFAULT_DECIMALS = 8;
+import { getDecimals } from "./util.ts";
+
+const DEFAULT_DECIMALS = 20;
 
 export class BigDenary {
   base: bigint;
@@ -16,20 +18,16 @@ export class BigDenary {
         this.decimals = decimals; // scale
       }
     } else if (typeof n === "number") {
-      this._decimals = decimals ? decimals : DEFAULT_DECIMALS;
-      this.base = BigInt(Math.floor(n * Math.pow(10, this._decimals)));
+      this._decimals = getDecimals(n);
+      this.base = BigInt(n * Math.pow(10, this._decimals)); 
+      this.decimals = decimals ? decimals : DEFAULT_DECIMALS;
+    } else if (typeof n === "string") {
+      this._decimals = getDecimals(n);
+      this.base = BigInt(n.replace(".", ""));
+      this.decimals = decimals ? decimals : DEFAULT_DECIMALS;      
     } else if (typeof n === "bigint") {
       this._decimals = decimals ? decimals : DEFAULT_DECIMALS;
       this.base = n * this.decimalMultiplier;
-    } else if (typeof n === "string") {
-      this._decimals = decimals ? decimals : DEFAULT_DECIMALS;
-      try {
-        this.base = BigInt(n) * this.decimalMultiplier;
-      } catch {
-        this.base = BigInt(
-          Math.floor(Number.parseFloat(n) * Math.pow(10, this._decimals)),
-        );
-      }
     } else {
       throw new Error("UnsupportedInput");
     }
