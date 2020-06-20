@@ -4,6 +4,10 @@ import {
 } from "https://deno.land/std/testing/asserts.ts";
 import { BigDenary } from "./mod.ts";
 
+/** 
+ * Initializers
+ */
+
 Deno.test("Initialize with integer (number)", () => {
   const bd1 = new BigDenary(1234);
   assertEquals(bd1.base, 123400000000n);
@@ -90,3 +94,7 @@ Deno.test("Initialize with bigint", () => {
   );
   assertEquals(bd.decimals, 6);
 });
+
+/**
+ * Decimal scaling
+ */
