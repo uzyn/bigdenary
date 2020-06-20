@@ -4,8 +4,9 @@ export class BigDenary {
 
   constructor(n: number | string | BigDenary, decimals?: number) {
     if (n instanceof BigDenary) {
+      // TODO: Support scaling
       if (decimals) {
-        throw new Error("Unexpected parameter 'decimals' for BigDenary input");
+        throw new Error("UnexpectedParameter");
       }
       this.base = n.base;
       this.decimals = n.decimals;

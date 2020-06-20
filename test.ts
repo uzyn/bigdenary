@@ -1,4 +1,4 @@
-import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+import { assertEquals, assertThrows } from "https://deno.land/std/testing/asserts.ts";
 import { BigDenary } from "./mod.ts";
 
 Deno.test("Initialize with integer (number)", () => {
@@ -34,3 +34,13 @@ Deno.test("Round down when initializing with float", () => {
   assertEquals(bd3.base, 123456789012345677877719597056n); // it is not accurate when input with float
   assertEquals(bd3.decimals, 10);
 });
+
+Deno.test("Initialize with BigDenary", () => {
+  const source = new BigDenary(1234.56);
+  const bd = new BigDenary(source);
+  assertEquals(bd, source);
+
+  // When input is BigDenary, unable to override decimals
+  assertThrows(() => new BigDenary(source, 1), Error, "UnexpectedParameter");
+});
+
