@@ -120,7 +120,7 @@ Deno.test("Decimals - scale up", () => {
 
   bd.decimals = 12;
   assertEquals(bd.base, 12345678000000000000n);
-  assertEquals(bd.decimals, 12);  
+  assertEquals(bd.decimals, 12);
 });
 
 Deno.test("Decimals - scale down", () => {
@@ -143,4 +143,19 @@ Deno.test("Decimals - scale down", () => {
   bd.decimals = 0;
   assertEquals(bd.base, 12345678n);
   assertEquals(bd.decimals, 0);
+});
+
+/**
+ * toString() and valudOf()
+ */
+Deno.test("toString()", () => {
+  assertEquals(
+    (new BigDenary("12345678.1468")).toString(),
+    "12345678.14680000000000000000",
+  );
+  assertEquals((new BigDenary("12345678.1468", 2)).toString(), "12345678.14");
+  assertEquals(
+    (new BigDenary("12345678.1468", 25)).toString(),
+    "12345678.1468000000000000000000000",
+  );
 });
