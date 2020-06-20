@@ -29,6 +29,9 @@ export class BigDenary {
       this.base = n * this.decimalMultiplier;
       this._decimals = 0;
     } else if (isBigDenaryRaw(n)) {
+      if (n.decimals < 0) {
+        throw new Error("InvalidBigDenaryRaw");
+      }
       this.base = n.base;
       this._decimals = n.decimals;
     } else {
@@ -37,6 +40,10 @@ export class BigDenary {
   }
 
   toString(): string {
+    if (this.base === 0n) {
+      return "0";
+    }
+    
     const baseStr = this.base.toString();
     const position = baseStr.length - this._decimals;
     const pre = baseStr.substr(0, position);
@@ -96,6 +103,17 @@ export class BigDenary {
 
     return new BigDenary({
       base: curr.base + oper.base,
+      decimals: targetDecs,
+    });
+  }
+
+  multipliedBy(operand: NumberInput): BigDenary {
+    const curr = new BigDenary(this);
+    const oper = new BigDenary(operand);
+    const targetDecs = curr.decimals + oper.decimals;
+    
+    return new BigDenary({
+      base: curr.base * oper.base,
       decimals: targetDecs,
     });
   }
