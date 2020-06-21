@@ -156,7 +156,7 @@ Deno.test("toString()", () => {
 
 Deno.test("trimTrailingZeros()", () => {
   let original = new BigDenary("12345678.7890");
-  assertEquals(original.decimals, 4);
+  assertEquals(original.decimals, 3);
   original.scaleDecimalsTo(20);
   assertEquals(original.decimals, 20);
   original.trimTrailingZeros();
@@ -170,7 +170,7 @@ Deno.test("trimTrailingZeros()", () => {
   assertEquals(original.decimals, 3);
 
   original = new BigDenary("-12345600.00000");
-  assertEquals(original.decimals, 5);
+  assertEquals(original.decimals, 0);
   original.scaleDecimalsTo(20);
   assertEquals(original.decimals, 20);
   original.trimTrailingZeros();
@@ -197,7 +197,7 @@ Deno.test("add()", () => {
   second.scaleDecimalsTo(42);
   assertEquals(
     start.plus(second).toString(),
-    "123802.748443211000000000000000000000000000000000",
+    "123802.748443211",
   );
   second.scaleDecimalsTo(1);
   assertEquals(start.plus(second).toString(), "123802.689");
@@ -226,9 +226,9 @@ Deno.test("multipliedBy()", () => {
 Deno.test("dividedBy()", () => {
   const start = new BigDenary("123456.789");
   assertThrows(() => start.dividedBy(0), RangeError, "Division by zero");
-  assertEquals(start.dividedBy(1).toString(), "123456.78900000000000000000");
-  assertEquals(start.dividedBy(2).toString(), "61728.39450000000000000000");
-  assertEquals(start.dividedBy(-1).toString(), "-123456.78900000000000000000");
+  assertEquals(start.dividedBy(1).toString(), "123456.789");
+  assertEquals(start.dividedBy(2).toString(), "61728.3945");
+  assertEquals(start.dividedBy(-1).toString(), "-123456.789");
   assertEquals(start.dividedBy("1.49").toString(), "828.56905369127516778523");
 });
 

@@ -37,6 +37,7 @@ export class BigDenary {
     } else {
       throw new Error("UnsupportedInput");
     }
+    this.trimTrailingZeros();
   }
 
   toString(): string {
