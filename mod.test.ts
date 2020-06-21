@@ -272,6 +272,20 @@ Deno.test("comparedTo()", () => {
   assertEquals(start.comparedTo("-123456.79"), 1);
 });
 
+Deno.test("equals()", () => {
+  let start = new BigDenary("123456.789");
+  assertEquals(start.equals("123456.79"), false);
+  assertEquals(start.equals("123456.789"), true);
+  assertEquals(start.equals("123456.789000"), true);
+
+  start = new BigDenary("-123456.789");
+  assertEquals(start.equals("0"), false);
+  assertEquals(start.equals("123456.75"), false);
+  assertEquals(start.equals("-123456.789000"), true);
+  assertEquals(start.equals("123456.789000"), false);
+  assertEquals(start.equals("-123456.78900000000000000000000000"), true);
+});
+
 /**
  * Shortforms
  */
@@ -285,4 +299,5 @@ Deno.test("Shortforms", () => {
   assertEquals(start.neg(), start.negated());
   assertEquals(start.abs(), start.absoluteValue());
   assertEquals(start.cmp(operand), start.comparedTo(operand));
+  assertEquals(start.eq(operand), start.equals(operand));
 });

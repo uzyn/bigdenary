@@ -180,6 +180,10 @@ export class BigDenary {
     return CommparisonResult.Equal;
   }
 
+  equals(comparator: NumberInput): boolean {
+    return (this.comparedTo(comparator) === CommparisonResult.Equal);
+  }
+
   /**
    * Shortforms
    */
@@ -209,5 +213,9 @@ export class BigDenary {
 
   cmp(comparator: NumberInput): CommparisonResult {
     return this.comparedTo(comparator);
+  }
+
+  eq(comparator: NumberInput): boolean {
+    return this.equals(comparator);
   }
 }
