@@ -242,3 +242,28 @@ Deno.test("negated()", () => {
     "123456.789",
   );
 });
+
+Deno.test("absoluteValue()", () => {
+  assertEquals(
+    (new BigDenary("123456.789")).absoluteValue().toString(),
+    "123456.789",
+  );
+  assertEquals(
+    (new BigDenary("-123456.789")).absoluteValue().toString(),
+    "123456.789",
+  );
+});
+
+/**
+ * Shortforms
+ */
+Deno.test("Shortforms", () => {
+  const start = new BigDenary("123456.789");
+  const operand = new BigDenary("2");
+  assertEquals(start.add(operand), start.plus(operand));
+  assertEquals(start.sub(operand), start.minus(operand));
+  assertEquals(start.mul(operand), start.multipliedBy(operand));
+  assertEquals(start.div(operand), start.dividedBy(operand));
+  assertEquals(start.neg(), start.negated());
+  assertEquals(start.abs(), start.absoluteValue());
+});

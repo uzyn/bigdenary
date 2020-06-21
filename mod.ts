@@ -147,4 +147,38 @@ export class BigDenary {
       decimals: this.decimals,
     });
   }
+
+  absoluteValue(): BigDenary {
+    if (this.base >= 0n) {
+      return this;
+    }
+    return this.negated();
+  }
+
+  /**
+   * Shortforms
+   */
+  add(operand: NumberInput): BigDenary {
+    return this.plus(operand);
+  }
+
+  sub(operand: NumberInput): BigDenary {
+    return this.minus(operand);
+  }
+
+  mul(operand: NumberInput): BigDenary {
+    return this.multipliedBy(operand);
+  }
+
+  div(operand: NumberInput): BigDenary {
+    return this.dividedBy(operand);
+  }
+
+  neg(): BigDenary {
+    return this.negated();
+  }
+
+  abs(): BigDenary {
+    return this.absoluteValue();
+  }
 }
