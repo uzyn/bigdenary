@@ -9,8 +9,12 @@ import { BigDenary } from "./mod.ts";
  */
 
 Deno.test("Instantiate with integer (number)", () => {
-  const bd = new BigDenary(1234);
+  let bd = new BigDenary(1234);
   assertEquals(bd.base, 1234n);
+  assertEquals(bd.decimals, 0);
+
+  bd = new BigDenary(89e19);
+  assertEquals(bd.base, 890000000000000000000n);
   assertEquals(bd.decimals, 0);
 });
 
@@ -22,6 +26,10 @@ Deno.test("Instantiate with decimal/float", () => {
   bd = new BigDenary(12.345678);
   assertEquals(bd.base, 12345678n);
   assertEquals(bd.decimals, 6);
+
+  bd = new BigDenary(12.3e7);
+  assertEquals(bd.base, 123000000n);
+  assertEquals(bd.decimals, 0);
 
   bd = new BigDenary(1234567890.12345678901234);
   assertEquals(bd.base, 12345678901234568n); // Due to float inaccuracy
