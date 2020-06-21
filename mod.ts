@@ -148,6 +148,13 @@ export class BigDenary {
     });
   }
 
+  absoluteValue(): BigDenary {
+    if (this.base >= 0n) {
+      return this;
+    }
+    return this.negated();
+  }
+
   /**
    * Shortforms
    */
@@ -162,8 +169,16 @@ export class BigDenary {
   mul(operand: NumberInput): BigDenary {
     return this.multipliedBy(operand);
   }
-  
+
   div(operand: NumberInput): BigDenary {
     return this.dividedBy(operand);
+  }
+
+  neg(): BigDenary {
+    return this.negated();
+  }
+
+  abs(): BigDenary {
+    return this.absoluteValue();
   }
 }
