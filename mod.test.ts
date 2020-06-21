@@ -197,6 +197,16 @@ Deno.test("multipliedBy()", () => {
   assertEquals(start.multipliedBy(1).toString(), "123456.789");
   assertEquals(start.multipliedBy(2).toString(), "246913.578");
   assertEquals(start.multipliedBy(-1).toString(), "-123456.789");
+  assertEquals(start.multipliedBy("1.49").toString(), "183950.61561");
+});
+
+Deno.test("dividedBy()", () => {
+  const start = new BigDenary("123456.789");
+  assertThrows(() => start.dividedBy(0), RangeError, "Division by zero");
+  assertEquals(start.dividedBy(1).toString(), "123456.78900000000000000000");
+  assertEquals(start.dividedBy(2).toString(), "61728.39450000000000000000");
+  assertEquals(start.dividedBy(-1).toString(), "-123456.78900000000000000000");
+  assertEquals(start.dividedBy("1.49").toString(), "828.56905369127516778523");
 });
 
 Deno.test("negated()", () => {

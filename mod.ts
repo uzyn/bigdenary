@@ -122,6 +122,19 @@ export class BigDenary {
     });
   }
 
+  dividedBy(operand: NumberInput): BigDenary {
+    const MIN_DIVIDE_DECIMALS = 20;
+    const curr = new BigDenary(this);
+    const oper = new BigDenary(operand);
+    const targetDecs = Math.max((curr.decimals) * 2, MIN_DIVIDE_DECIMALS);
+    curr.scaleDecimalsTo(targetDecs);
+
+    return new BigDenary({
+      base: curr.base / oper.base,
+      decimals: targetDecs,
+    });
+  }
+
   negated(): BigDenary {
     return new BigDenary({
       base: this.base * -1n,
