@@ -11,11 +11,11 @@ export function getDecimals(n: number | string): number {
   return components[1].length || 0;
 }
 
-export function countTrailingZeroes(n: bigint): number {
+export function countTrailingZeros(n: bigint): number {
   if (n === 0n) {
     return 0;
   }
-
+  
   const nStr = n.toString();
   let count = 0;
   while (nStr.substr(nStr.length - 1 - count, 1) === "0") {

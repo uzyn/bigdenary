@@ -1,4 +1,4 @@
-import { getDecimals } from "./util.ts";
+import { getDecimals, countTrailingZeros } from "./util.ts";
 
 interface BigDenaryRaw {
   base: bigint;
@@ -92,7 +92,8 @@ export class BigDenary {
   }
 
   trimTrailingZeros(): void {
-    // this.
+    const trailingZerosCount = countTrailingZeros(this.base);
+    this.scaleDecimalsTo(Math.max(this.decimals - trailingZerosCount, 0));
   }
 
   /**

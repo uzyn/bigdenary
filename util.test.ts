@@ -2,7 +2,7 @@ import {
   assertEquals,
   assertThrows,
 } from "https://deno.land/std/testing/asserts.ts";
-import { getDecimals, countTrailingZeroes } from "./util.ts";
+import { getDecimals, countTrailingZeros } from "./util.ts";
 
 Deno.test("getDecimals() with string input", () => {
   assertEquals(getDecimals("0.52135"), 5);
@@ -24,9 +24,9 @@ Deno.test("getDecimals() with number input", () => {
   assertEquals(getDecimals(9846515), 0);
 });
 
-Deno.test("countTrailingZeroes()", () => {
-  assertEquals(countTrailingZeroes(0n), 0);
-  assertEquals(countTrailingZeroes(5213522323n), 0);
-  assertEquals(countTrailingZeroes(52113500000n), 5);
-  assertEquals(countTrailingZeroes(-9846515000000000000000n), 15);
+Deno.test("countTrailingZeros()", () => {
+  assertEquals(countTrailingZeros(0n), 0);
+  assertEquals(countTrailingZeros(5213522323n), 0);
+  assertEquals(countTrailingZeros(52113500000n), 5);
+  assertEquals(countTrailingZeros(-9846515000000000000000n), 15);
 });

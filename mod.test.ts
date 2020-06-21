@@ -154,6 +154,29 @@ Deno.test("toString()", () => {
   );
 });
 
+Deno.test("trimTrailingZeros()", () => {
+  let original = new BigDenary("12345678.7890");
+  assertEquals(original.decimals, 4);
+  original.scaleDecimalsTo(20);
+  assertEquals(original.decimals, 20);
+  original.trimTrailingZeros();
+  assertEquals(original.decimals, 3);
+
+  original = new BigDenary("-12345678.789");
+  assertEquals(original.decimals, 3);
+  original.scaleDecimalsTo(20);
+  assertEquals(original.decimals, 20);
+  original.trimTrailingZeros();
+  assertEquals(original.decimals, 3);
+
+  original = new BigDenary("-12345600.00000");
+  assertEquals(original.decimals, 5);
+  original.scaleDecimalsTo(20);
+  assertEquals(original.decimals, 20);
+  original.trimTrailingZeros();
+  assertEquals(original.decimals, 0);
+});
+
 /**
  * Operations
  */
