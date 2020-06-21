@@ -27,8 +27,8 @@ import BigDenary from "https://raw.githubusercontent.com/uzyn/bigdenary/master/m
 const bd = new BigDenary("123.4512");
 const sum = bd.add(56.1e2));
 
-console.log(sum.toString()); // 5955.234
-console.log(sum); // BigDenary { base: 5955234n, _decimals: 3 }
+console.log(sum.toString()); // 5733.4512
+console.log(sum); // BigDenary { base: 57334512n, _decimals: 4 }
 ```
 
 API is largely inspired by [`decimal.js-light`](https://github.com/MikeMcl/decimal.js-light).
