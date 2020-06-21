@@ -11,7 +11,7 @@ Arbitrary-length decimal implementation using JavaScript's native [BigInt](https
 
 - Compute methods are largely implemented through native BigInt, without much string manipulation required.
 
-- Very lightweight.
+- Standalone & lightweight. Zero dependencies.
 
 - Intuitive data structure – base amount and decimals.
 
