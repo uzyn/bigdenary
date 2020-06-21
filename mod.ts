@@ -7,6 +7,12 @@ interface BigDenaryRaw {
 
 type NumberInput = number | string | bigint | BigDenary | BigDenaryRaw;
 
+enum CommparisonResult {
+  Greater = 1,
+  Less = -1,
+  Equal = 0,
+}
+
 function isBigDenaryRaw(input: BigDenaryRaw): input is BigDenaryRaw {
   return true;
 }
@@ -156,6 +162,51 @@ export class BigDenary {
   }
 
   /**
+   * Comparisons
+   */
+
+  comparedTo(comparator: NumberInput): CommparisonResult {
+    const curr = new BigDenary(this);
+    const comp = new BigDenary(comparator);
+    const targetDecs = Math.max(curr.decimals, comp.decimals);
+    curr.scaleDecimalsTo(targetDecs);
+    comp.scaleDecimalsTo(targetDecs);
+
+    if (curr.base > comp.base) {
+      return CommparisonResult.Greater;
+    } else if (curr.base < comp.base) {
+      return CommparisonResult.Less;
+    }
+    return CommparisonResult.Equal;
+  }
+
+  equals(comparator: NumberInput): boolean {
+    return (this.comparedTo(comparator) === CommparisonResult.Equal);
+  }
+
+  greaterThan(comparator: NumberInput): boolean {
+    return (this.comparedTo(comparator) === CommparisonResult.Greater);
+  }
+
+  greaterThanOrEqualTo(comparator: NumberInput): boolean {
+    return (
+      (this.comparedTo(comparator) === CommparisonResult.Greater) ||
+      (this.comparedTo(comparator) === CommparisonResult.Equal)
+    );
+  }
+
+  lessThan(comparator: NumberInput): boolean {
+    return (this.comparedTo(comparator) === CommparisonResult.Less);
+  }
+
+  lessThanOrEqualTo(comparator: NumberInput): boolean {
+    return (
+      (this.comparedTo(comparator) === CommparisonResult.Less) ||
+      (this.comparedTo(comparator) === CommparisonResult.Equal)
+    );
+  }
+
+  /**
    * Shortforms
    */
   add(operand: NumberInput): BigDenary {
@@ -180,5 +231,29 @@ export class BigDenary {
 
   abs(): BigDenary {
     return this.absoluteValue();
+  }
+
+  cmp(comparator: NumberInput): CommparisonResult {
+    return this.comparedTo(comparator);
+  }
+
+  eq(comparator: NumberInput): boolean {
+    return this.equals(comparator);
+  }
+
+  gt(comparator: NumberInput): boolean {
+    return this.greaterThan(comparator);
+  }
+
+  gte(comparator: NumberInput): boolean {
+    return this.greaterThanOrEqualTo(comparator);
+  }
+
+  lt(comparator: NumberInput): boolean {
+    return this.lessThan(comparator);
+  }
+
+  lte(comparator: NumberInput): boolean {
+    return this.lessThanOrEqualTo(comparator);
   }
 }

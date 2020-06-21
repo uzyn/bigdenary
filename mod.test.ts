@@ -255,6 +255,108 @@ Deno.test("absoluteValue()", () => {
 });
 
 /**
+ * Comparisons
+ */
+Deno.test("comparedTo()", () => {
+  let start = new BigDenary("123456.789");
+  assertEquals(start.comparedTo("123456.79"), -1);
+  assertEquals(start.comparedTo("123456.75"), 1);
+  assertEquals(start.comparedTo("123456.789000"), 0);
+
+  start = new BigDenary("-123456.789");
+  assertEquals(start.comparedTo("0"), -1);
+  assertEquals(start.comparedTo("123456.75"), -1);
+  assertEquals(start.comparedTo("-123456.789000"), 0);
+  assertEquals(start.comparedTo("123456.789000"), -1);
+  assertEquals(start.comparedTo("-223456.789000"), 1);
+  assertEquals(start.comparedTo("-123456.79"), 1);
+});
+
+Deno.test("equals()", () => {
+  let start = new BigDenary("123456.789");
+  assertEquals(start.equals("123456.79"), false);
+  assertEquals(start.equals("123456.789"), true);
+  assertEquals(start.equals("123456.789000"), true);
+
+  start = new BigDenary("-123456.789");
+  assertEquals(start.equals("0"), false);
+  assertEquals(start.equals("123456.75"), false);
+  assertEquals(start.equals("-123456.789000"), true);
+  assertEquals(start.equals("123456.789000"), false);
+  assertEquals(start.equals("-123456.78900000000000000000000000"), true);
+});
+
+Deno.test("greaterThan()", () => {
+  let start = new BigDenary("123456.789");
+  assertEquals(start.greaterThan("123456.788"), true);
+  assertEquals(start.greaterThan("123456.79"), false);
+  assertEquals(start.greaterThan("123456.789"), false);
+  assertEquals(start.greaterThan("123456.789000"), false);
+
+  start = new BigDenary("-123456.789");
+  assertEquals(start.greaterThan("0"), false);
+  assertEquals(start.greaterThan("123456.75"), false);
+  assertEquals(start.greaterThan("-123456.789000"), false);
+  assertEquals(start.greaterThan("123456.789000"), false);
+  assertEquals(start.greaterThan("-123456.78900000000000000000000000"), false);
+  assertEquals(start.greaterThan("-123456.7891"), true);
+});
+
+Deno.test("greaterThanOrEqualTo()", () => {
+  let start = new BigDenary("123456.789");
+  assertEquals(start.greaterThanOrEqualTo("123456.788"), true);
+  assertEquals(start.greaterThanOrEqualTo("123456.79"), false);
+  assertEquals(start.greaterThanOrEqualTo("123456.789"), true);
+  assertEquals(start.greaterThanOrEqualTo("123456.789000"), true);
+
+  start = new BigDenary("-123456.789");
+  assertEquals(start.greaterThanOrEqualTo("0"), false);
+  assertEquals(start.greaterThanOrEqualTo("123456.75"), false);
+  assertEquals(start.greaterThanOrEqualTo("-123456.789000"), true);
+  assertEquals(start.greaterThanOrEqualTo("123456.789000"), false);
+  assertEquals(
+    start.greaterThanOrEqualTo("-123456.78900000000000000000000000"),
+    true,
+  );
+  assertEquals(start.greaterThanOrEqualTo("-123456.7891"), true);
+});
+
+Deno.test("lessThan()", () => {
+  let start = new BigDenary("123456.789");
+  assertEquals(start.lessThan("123456.788"), false);
+  assertEquals(start.lessThan("123456.79"), true);
+  assertEquals(start.lessThan("123456.789"), false);
+  assertEquals(start.lessThan("123456.789000"), false);
+
+  start = new BigDenary("-123456.789");
+  assertEquals(start.lessThan("0"), true);
+  assertEquals(start.lessThan("123456.75"), true);
+  assertEquals(start.lessThan("-123456.789000"), false);
+  assertEquals(start.lessThan("123456.789000"), true);
+  assertEquals(start.lessThan("-123456.78900000000000000000000000"), false);
+  assertEquals(start.lessThan("-123456.7891"), false);
+});
+
+Deno.test("lessThanOrEqualTo()", () => {
+  let start = new BigDenary("123456.789");
+  assertEquals(start.lessThanOrEqualTo("123456.788"), false);
+  assertEquals(start.lessThanOrEqualTo("123456.79"), true);
+  assertEquals(start.lessThanOrEqualTo("123456.789"), true);
+  assertEquals(start.lessThanOrEqualTo("123456.789000"), true);
+
+  start = new BigDenary("-123456.789");
+  assertEquals(start.lessThanOrEqualTo("0"), true);
+  assertEquals(start.lessThanOrEqualTo("123456.75"), true);
+  assertEquals(start.lessThanOrEqualTo("-123456.789000"), true);
+  assertEquals(start.lessThanOrEqualTo("123456.789000"), true);
+  assertEquals(
+    start.lessThanOrEqualTo("-123456.78900000000000000000000000"),
+    true,
+  );
+  assertEquals(start.lessThanOrEqualTo("-123456.7891"), false);
+});
+
+/**
  * Shortforms
  */
 Deno.test("Shortforms", () => {
@@ -266,4 +368,10 @@ Deno.test("Shortforms", () => {
   assertEquals(start.div(operand), start.dividedBy(operand));
   assertEquals(start.neg(), start.negated());
   assertEquals(start.abs(), start.absoluteValue());
+  assertEquals(start.cmp(operand), start.comparedTo(operand));
+  assertEquals(start.eq(operand), start.equals(operand));
+  assertEquals(start.gt(operand), start.greaterThan(operand));
+  assertEquals(start.gte(operand), start.greaterThanOrEqualTo(operand));
+  assertEquals(start.lt(operand), start.lessThan(operand));
+  assertEquals(start.lte(operand), start.lessThanOrEqualTo(operand));
 });
