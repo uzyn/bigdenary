@@ -17,7 +17,7 @@ function isBigDenaryRaw(input: BigDenaryRaw): input is BigDenaryRaw {
   return true;
 }
 
-export class BigDenary {
+export default class BigDenary {
   base: bigint;
   private _decimals: number;
 
