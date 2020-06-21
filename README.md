@@ -7,17 +7,15 @@ Arbitrary-length decimal implementation using JavaScript's native [BigInt](https
 
 ### Features
 
-- [Deno](https://deno.land) module first. Also soon to be available as ES Module (ESM) and CommonJS (Node) module.
+- [Deno](https://deno.land) module first. Soon to be available as ES Module (ESM) and CommonJS (Node) module.
 
 - Compute methods are largely implemented through native BigInt, without much string manipulation required.
 
 - Standalone & lightweight. Zero dependencies.
 
-- Intuitive data structure – base amount and decimals.
+- Intuitive data structure – base amount and decimal places, similar to that of cryptocurrency esp. Bitcoin.
 
-- _Should be_ faster than existing bignumber, bigdecimal today. _(Untested, yet)_
-
-- API is similar with popular bignumber, big.js, decimal.js, decimal.js-light, though not all methods are supported, yet.
+- API is similar with the popular BigNumber libraries such as bignumber.js, big.js, decimal.js. Not all methods are supported, yet.
 
 ## Usage
 
@@ -31,22 +29,22 @@ console.log(sum.toString()); // 5733.4512
 console.log(sum); // BigDenary { base: 57334512n, _decimals: 4 }
 ```
 
-API is largely inspired by [`decimal.js-light`](https://github.com/MikeMcl/decimal.js-light).
+API is largely inspired by and attempts to be compatible with [`decimal.js-light`](https://github.com/MikeMcl/decimal.js-light).
 
 ### Available API
 
 #### Core
 - `constructor()`: supports `number | string | bigint | BigDenary | BigDenaryRaw`.
-- `toString()`: Returns string representation
-- `valueOf()`: Returns number approximation
+- `toString()`: Returns `string` representation
+- `valueOf()`: Returns `number` approximation
 
 #### Operations
-- `plus()` or `add()`: Addition
-- `minus()` or `sub()`: Subtraction
-- `multipliedBy()` or `mul()`: Multiplication
-- `dividedBy()` or `div()`: Division
-- `negated()` or `neg()`: Negation
-- `absoluteValue()` or `abs()`: Absolute value
+- `plus()` or `add()`
+- `minus()` or `sub()`
+- `multipliedBy()` or `mul()`
+- `dividedBy()` or `div()`
+- `negated()` or `neg()`
+- `absoluteValue()` or `abs()`
 
 #### Comparisons
 - `comparedTo()` or `cmp()`
@@ -65,3 +63,13 @@ API is largely inspired by [`decimal.js-light`](https://github.com/MikeMcl/decim
   ```bash
   deno test
   ```
+
+## Notes
+
+JavaScript native decimal support is currently [being proposed](https://github.com/tc39/proposal-decimal) (Stage 1) to ECMA.
+
+## License
+
+MIT
+
+Contributions are welcomed. 
