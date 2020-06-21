@@ -147,4 +147,23 @@ export class BigDenary {
       decimals: this.decimals,
     });
   }
+
+  /**
+   * Shortforms
+   */
+  add(operand: NumberInput): BigDenary {
+    return this.plus(operand);
+  }
+
+  sub(operand: NumberInput): BigDenary {
+    return this.minus(operand);
+  }
+
+  mul(operand: NumberInput): BigDenary {
+    return this.multipliedBy(operand);
+  }
+  
+  div(operand: NumberInput): BigDenary {
+    return this.dividedBy(operand);
+  }
 }
