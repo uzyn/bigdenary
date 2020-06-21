@@ -198,3 +198,14 @@ Deno.test("multipliedBy()", () => {
   assertEquals(start.multipliedBy(2).toString(), "246913.578");
   assertEquals(start.multipliedBy(-1).toString(), "-123456.789");
 });
+
+Deno.test("negated()", () => {
+  assertEquals(
+    (new BigDenary("123456.789")).negated().toString(),
+    "-123456.789",
+  );
+  assertEquals(
+    (new BigDenary("-123456.789")).negated().toString(),
+    "123456.789",
+  );
+});
