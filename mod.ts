@@ -7,6 +7,12 @@ interface BigDenaryRaw {
 
 type NumberInput = number | string | bigint | BigDenary | BigDenaryRaw;
 
+enum CommparisonResult {
+  GreaterThan = 1,
+  LessThan = -1,
+  Equal = 0,
+}
+
 function isBigDenaryRaw(input: BigDenaryRaw): input is BigDenaryRaw {
   return true;
 }
@@ -156,6 +162,25 @@ export class BigDenary {
   }
 
   /**
+   * Comparisons
+   */
+
+  comparedTo(comparator: NumberInput): CommparisonResult {
+    const curr = new BigDenary(this);
+    const comp = new BigDenary(comparator);
+    const targetDecs = Math.max(curr.decimals, comp.decimals);
+    curr.scaleDecimalsTo(targetDecs);
+    comp.scaleDecimalsTo(targetDecs);
+
+    if (curr.base > comp.base) {
+      return CommparisonResult.GreaterThan;
+    } else if (curr.base < comp.base) {
+      return CommparisonResult.LessThan;
+    }
+    return CommparisonResult.Equal;
+  }
+
+  /**
    * Shortforms
    */
   add(operand: NumberInput): BigDenary {
@@ -180,5 +205,9 @@ export class BigDenary {
 
   abs(): BigDenary {
     return this.absoluteValue();
+  }
+
+  cmp(comparator: NumberInput): CommparisonResult {
+    return this.comparedTo(comparator);
   }
 }
