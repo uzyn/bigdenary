@@ -68,7 +68,7 @@ export class BigDenary {
   /**
    * Alters the decimal places, actual underlying value does not change
    */
-  scaleDecimalsTo(_decimals: number) {
+  scaleDecimalsTo(_decimals: number): void {
     if (_decimals > this._decimals) {
       this.base = this.base *
         BigDenary.getDecimalMultiplier(_decimals - this._decimals);
@@ -89,6 +89,10 @@ export class BigDenary {
       multiplierStr += "0";
     }
     return BigInt(multiplierStr);
+  }
+
+  trimTrailingZeros(): void {
+    // this.
   }
 
   /**
