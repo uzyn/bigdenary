@@ -18,7 +18,7 @@ export function countTrailingZeros(n: bigint): number {
 
   const nStr = n.toString();
   let count = 0;
-  while (nStr.substr(nStr.length - 1 - count, 1) === "0") {
+  while (nStr[nStr.length - 1 - count] === "0") {
     count += 1;
   }
   return count;
