@@ -15,7 +15,7 @@ Arbitrary-length decimal implementation using JavaScript's native [BigInt](https
 
 - Intuitive data structure – base amount and decimals.
 
-- _Should be_ faster than existing bignumber, bigdecimal today. _(Untested, yet)
+- _Should be_ faster than existing bignumber, bigdecimal today. _(Untested, yet)_
 
 - API is similar with popular bignumber, big.js, decimal.js, decimal.js-light, though not all methods are supported, yet.
 
