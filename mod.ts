@@ -72,6 +72,10 @@ export class BigDenary {
     return Number.parseFloat(this.toString());
   }
 
+  toFixed(): string {
+    return "a";
+  }
+
   get decimals(): number {
     return this._decimals;
   }

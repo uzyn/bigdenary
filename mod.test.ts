@@ -2,7 +2,7 @@ import {
   assertEquals,
   assertThrows,
 } from "https://deno.land/std/testing/asserts.ts";
-import { BigDenary }  from "./mod.ts";
+import { BigDenary } from "./mod.ts";
 
 /**
  * Constructors
@@ -149,7 +149,7 @@ Deno.test("Decimals - scale down", () => {
 });
 
 /**
- * toString() and valudOf()
+ * toString() and valueOf()
  */
 Deno.test("toString()", () => {
   assertEquals(
@@ -172,6 +172,13 @@ Deno.test("toString()", () => {
     (new BigDenary("0")).toString(),
     "0",
   );
+});
+
+Deno.test("valueOf()", () => {
+  assertEquals(new BigDenary("34.5632").valueOf(), 34.5632);
+  assertEquals(new BigDenary("34.5632e5").valueOf(), 3456320);
+  assertEquals(new BigDenary("34.5632e1").valueOf(), 345.632);
+  assertEquals(new BigDenary("34.5632e18").valueOf(), 34563200000000000000);
 });
 
 Deno.test("trimTrailingZeros()", () => {
