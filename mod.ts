@@ -62,6 +62,8 @@ export class BigDenary {
 
     if (pre.length === 0) {
       return `0.${post}`;
+    } else if (pre.length === 1 && pre[0] === "-") {
+      return `-0.${post}`;
     } else if (post.length === 0) {
       return `${pre}`;
     }
@@ -72,8 +74,27 @@ export class BigDenary {
     return Number.parseFloat(this.toString());
   }
 
-  toFixed(): string {
-    return "a";
+  toFixed(digits?: number): string {
+    const str = this.toString();
+    if (!digits || digits < 0) {
+      return str;
+    }
+
+    const decimals = getDecimals(str);
+
+    if (digits === decimals) {
+      return str;
+    } else if (digits > decimals) {
+      let addZeros = "";
+      for (let i = decimals; i < digits; i += 1) {
+        addZeros += "0";
+      }
+      if (this._decimals === 0) {
+        return `${str}.${addZeros}`;
+      }
+      return `${str}${addZeros}`;
+    }
+    return str.substr(0, str.length - (decimals - digits));
   }
 
   get decimals(): number {
