@@ -2,13 +2,21 @@ export function getDecimals(n: number | string): number {
   if (isNaN(n as any)) {
     throw new Error("InvalidNumber");
   }
-  const components = n.toString().split(".");
-  if (components.length === 1) {
-    return 0;
-  } else if (components.length !== 2) {
+  const [preDec, postDec] = _splitString(n.toString(), ".");
+  return postDec.length;
+}
+
+export function extractExp(n: string): [string, number] {
+  const [mul, expStr] = _splitString(n, "e");
+  if (expStr === "") {
+    return [n, 0];
+  }
+
+  const exp = parseInt(expStr, 10);
+  if (isNaN(exp)) {
     throw new Error("InvalidNumber");
   }
-  return components[1].length || 0;
+  return [mul, exp];
 }
 
 export function countTrailingZeros(n: bigint): number {
@@ -22,4 +30,16 @@ export function countTrailingZeros(n: bigint): number {
     count += 1;
   }
   return count;
+}
+
+function _splitString(input: string, char: string): [string, string] {
+  const pos = input.indexOf(char);
+  if (pos === -1) {
+    return [input, ""];
+  }
+  const after = input.substr(pos + 1);
+  if (after.indexOf(char) !== -1) {
+    throw new Error("InvalidNumber"); // Multiple occurences
+  }
+  return [input.substr(0, pos), after];
 }

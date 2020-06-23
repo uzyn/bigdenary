@@ -16,6 +16,10 @@ Deno.test("Instantiate with integer (number)", () => {
   bd = new BigDenary(89e19);
   assertEquals(bd.base, 890000000000000000000n);
   assertEquals(bd.decimals, 0);
+
+  bd = new BigDenary(89.12e19);
+  assertEquals(bd.base, 891200000000000000000n);
+  assertEquals(bd.decimals, 0);
 });
 
 Deno.test("Instantiate with decimal/float", () => {
@@ -71,6 +75,14 @@ Deno.test("Instantiate with number string", () => {
     1234567890123456789012345678906589426959512345678901234567890123n,
   );
   assertEquals(bd.decimals, 35);
+
+  bd = new BigDenary("89e19");
+  assertEquals(bd.base, 890000000000000000000n);
+  assertEquals(bd.decimals, 0);
+
+  bd = new BigDenary("89.12e19");
+  assertEquals(bd.base, 891200000000000000000n);
+  assertEquals(bd.decimals, 0);
 });
 
 Deno.test("Instantiate with bigint", () => {
