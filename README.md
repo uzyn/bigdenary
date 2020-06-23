@@ -20,10 +20,10 @@ Arbitrary-length decimal implementation using JavaScript's native [BigInt](https
 ## Usage
 
 ```ts
-import BigDenary from "https://raw.githubusercontent.com/uzyn/bigdenary/master/mod.ts";
+import BigDenary from "https://deno.land/x/bigdenary/mod.ts";
 
 const bd = new BigDenary("123.4512");
-const sum = bd.add(56.1e2));
+const sum = bd.add(56.1e2);
 
 console.log(sum.toString()); // 5733.4512
 console.log(sum); // BigDenary { base: 57334512n, _decimals: 4 }
@@ -70,6 +70,6 @@ JavaScript native decimal support is currently [being proposed](https://github.c
 
 ## License
 
-MIT
+MIT &middot; [U-Zyn Chua](https://zynesis.com)
 
-Contributions are welcomed. 
+Contributions are welcomed.
