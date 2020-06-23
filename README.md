@@ -37,6 +37,7 @@ API is largely inspired by and attempts to be compatible with [`decimal.js-light
 - `constructor()`: supports `type BDNumberInput = number | string | bigint | BigDenary | BigDenaryRaw`.
 - `toString()`: Returns `string` representation
 - `valueOf()`: Returns `number` approximation
+- `toFixed(digits?)`: Returns `string` representation to the number of `digits` to appear decimal point.
 
 #### Operations
 - `plus()` or `add()`
