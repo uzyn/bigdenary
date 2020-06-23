@@ -54,20 +54,37 @@ export class BigDenary {
     if (this.base === 0n) {
       return "0";
     }
-
-    const baseStr = this.base.toString();
-    const position = baseStr.length - this._decimals;
-    const pre = baseStr.substr(0, position);
-    const post = baseStr.substr(position);
-
-    if (pre.length === 0) {
-      return `0.${post}`;
-    } else if (pre.length === 1 && pre[0] === "-") {
-      return `-0.${post}`;
-    } else if (post.length === 0) {
-      return `${pre}`;
+    const negative: boolean = (this.base < 0);
+    let base = this.base;
+    if (negative) {
+      base = base * -1n;
     }
-    return `${pre}.${post}`;
+
+    const baseStr = base.toString();
+    const position = baseStr.length - this._decimals;
+    let pre: string;
+    let post: string;
+    if (position < 0) {
+      pre = "";
+      post = `${_strOfZeros(position * -1)}${baseStr}`;
+    } else {
+      pre = baseStr.substr(0, position);
+      post = baseStr.substr(position);
+    }
+
+    let result: string;
+    if (pre.length === 0) {
+      result = `0.${post}`;
+    } else if (post.length === 0) {
+      result = `${pre}`;
+    } else {
+      result = `${pre}.${post}`;
+    }
+
+    if (negative) {
+      return `-${result}`;
+    }
+    return result;
   }
 
   valueOf(): number {
@@ -85,10 +102,7 @@ export class BigDenary {
     if (digits === decimals) {
       return str;
     } else if (digits > decimals) {
-      let addZeros = "";
-      for (let i = decimals; i < digits; i += 1) {
-        addZeros += "0";
-      }
+      const addZeros = _strOfZeros(digits - decimals);
       if (this._decimals === 0) {
         return `${str}.${addZeros}`;
       }
@@ -291,4 +305,12 @@ export class BigDenary {
 
 function _isBigDenaryRaw(input: BigDenaryRaw): input is BigDenaryRaw {
   return true;
+}
+
+function _strOfZeros(count: number): string {
+  let result = "";
+  for (let i = 0; i < count; i += 1) {
+    result += "0";
+  }
+  return result;
 }

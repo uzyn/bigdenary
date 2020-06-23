@@ -173,6 +173,34 @@ Deno.test("toString()", () => {
     "0",
   );
   assertEquals(new BigDenary("-0.1234").toString(), "-0.1234");
+  assertEquals(
+    new BigDenary({
+      base: 1079789473684210526n,
+      decimals: 20,
+    }).toString(),
+    "0.01079789473684210526",
+  );
+  assertEquals(
+    new BigDenary({
+      base: -1079789473684210526n,
+      decimals: 20,
+    }).toString(),
+    "-0.01079789473684210526",
+  );
+  assertEquals(
+    new BigDenary({
+      base: -211079789473684210526n,
+      decimals: 20,
+    }).toString(),
+    "-2.11079789473684210526",
+  );
+  assertEquals(
+    new BigDenary({
+      base: -211079789473684210526n,
+      decimals: 24,
+    }).toString(),
+    "-0.000211079789473684210526",
+  );
 });
 
 Deno.test("valueOf()", () => {
