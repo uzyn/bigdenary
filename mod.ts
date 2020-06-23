@@ -1,4 +1,4 @@
-import { getDecimals, countTrailingZeros } from "./util.ts";
+import { countTrailingZeros, extractExp, getDecimals } from "./util.ts";
 
 interface BigDenaryRaw {
   base: bigint;
@@ -29,8 +29,16 @@ export default class BigDenary {
       this._decimals = getDecimals(n);
       this.base = BigInt(n * Math.pow(10, this._decimals));
     } else if (typeof n === "string") {
-      this._decimals = getDecimals(n);
-      this.base = BigInt(n.replace(".", ""));
+      const [mul, exp] = extractExp(n);
+      const mulDec = getDecimals(mul);
+      if (exp > mulDec) {
+        this.base = BigInt(mul.replace(".", "")) *
+          BigInt(Math.pow(10, (exp - mulDec)));
+        this._decimals = 0;
+      } else {
+        this.base = BigInt(mul.replace(".", ""));
+        this._decimals = mulDec - exp;
+      }
     } else if (typeof n === "bigint") {
       this.base = n * this.decimalMultiplier;
       this._decimals = 0;
