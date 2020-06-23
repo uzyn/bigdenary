@@ -2,9 +2,9 @@ import {
   assertEquals,
   assertThrows,
 } from "https://deno.land/std/testing/asserts.ts";
-import BigDenary from "./mod.ts";
+import { BigDenary }  from "./mod.ts";
 
-/** 
+/**
  * Constructors
  */
 

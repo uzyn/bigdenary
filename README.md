@@ -20,7 +20,7 @@ Arbitrary-length decimal implementation using JavaScript's native [BigInt](https
 ## Usage
 
 ```ts
-import BigDenary from "https://deno.land/x/bigdenary/mod.ts";
+import { BigDenary } from "https://deno.land/x/bigdenary/mod.ts";
 
 const bd = new BigDenary("123.4512");
 const sum = bd.add(56.1e2);
@@ -34,7 +34,7 @@ API is largely inspired by and attempts to be compatible with [`decimal.js-light
 ### Available API
 
 #### Core
-- `constructor()`: supports `number | string | bigint | BigDenary | BigDenaryRaw`.
+- `constructor()`: supports `type BDNumberInput = number | string | bigint | BigDenary | BigDenaryRaw`.
 - `toString()`: Returns `string` representation
 - `valueOf()`: Returns `number` approximation
 

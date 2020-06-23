@@ -1,27 +1,23 @@
 import { countTrailingZeros, extractExp, getDecimals } from "./util.ts";
 
-interface BigDenaryRaw {
+export interface BigDenaryRaw {
   base: bigint;
   decimals: number;
 }
 
-type NumberInput = number | string | bigint | BigDenary | BigDenaryRaw;
+export type BDNumberInput = number | string | bigint | BigDenary | BigDenaryRaw;
 
-enum CommparisonResult {
+export enum BDCompare {
   Greater = 1,
   Less = -1,
   Equal = 0,
 }
 
-function isBigDenaryRaw(input: BigDenaryRaw): input is BigDenaryRaw {
-  return true;
-}
-
-export default class BigDenary {
+export class BigDenary {
   base: bigint;
   private _decimals: number;
 
-  constructor(n: NumberInput) {
+  constructor(n: BDNumberInput) {
     if (n instanceof BigDenary) {
       this.base = n.base;
       this._decimals = n.decimals;
@@ -42,7 +38,7 @@ export default class BigDenary {
     } else if (typeof n === "bigint") {
       this.base = n * this.decimalMultiplier;
       this._decimals = 0;
-    } else if (isBigDenaryRaw(n)) {
+    } else if (_isBigDenaryRaw(n)) {
       if (n.decimals < 0) {
         throw new Error("InvalidBigDenaryRaw");
       }
@@ -116,7 +112,7 @@ export default class BigDenary {
   /**
    * Operations
    */
-  plus(operand: NumberInput): BigDenary {
+  plus(operand: BDNumberInput): BigDenary {
     const curr = new BigDenary(this);
     const oper = new BigDenary(operand);
     const targetDecs = Math.max(curr.decimals, oper.decimals);
@@ -129,11 +125,11 @@ export default class BigDenary {
     });
   }
 
-  minus(operand: NumberInput): BigDenary {
+  minus(operand: BDNumberInput): BigDenary {
     return this.plus((new BigDenary(operand)).negated());
   }
 
-  multipliedBy(operand: NumberInput): BigDenary {
+  multipliedBy(operand: BDNumberInput): BigDenary {
     const curr = new BigDenary(this);
     const oper = new BigDenary(operand);
     const targetDecs = curr.decimals + oper.decimals;
@@ -144,7 +140,7 @@ export default class BigDenary {
     });
   }
 
-  dividedBy(operand: NumberInput): BigDenary {
+  dividedBy(operand: BDNumberInput): BigDenary {
     const MIN_DIVIDE_DECIMALS = 20;
     const curr = new BigDenary(this);
     const oper = new BigDenary(operand);
@@ -175,7 +171,7 @@ export default class BigDenary {
    * Comparisons
    */
 
-  comparedTo(comparator: NumberInput): CommparisonResult {
+  comparedTo(comparator: BDNumberInput): BDCompare {
     const curr = new BigDenary(this);
     const comp = new BigDenary(comparator);
     const targetDecs = Math.max(curr.decimals, comp.decimals);
@@ -183,55 +179,55 @@ export default class BigDenary {
     comp.scaleDecimalsTo(targetDecs);
 
     if (curr.base > comp.base) {
-      return CommparisonResult.Greater;
+      return BDCompare.Greater;
     } else if (curr.base < comp.base) {
-      return CommparisonResult.Less;
+      return BDCompare.Less;
     }
-    return CommparisonResult.Equal;
+    return BDCompare.Equal;
   }
 
-  equals(comparator: NumberInput): boolean {
-    return (this.comparedTo(comparator) === CommparisonResult.Equal);
+  equals(comparator: BDNumberInput): boolean {
+    return (this.comparedTo(comparator) === BDCompare.Equal);
   }
 
-  greaterThan(comparator: NumberInput): boolean {
-    return (this.comparedTo(comparator) === CommparisonResult.Greater);
+  greaterThan(comparator: BDNumberInput): boolean {
+    return (this.comparedTo(comparator) === BDCompare.Greater);
   }
 
-  greaterThanOrEqualTo(comparator: NumberInput): boolean {
+  greaterThanOrEqualTo(comparator: BDNumberInput): boolean {
     return (
-      (this.comparedTo(comparator) === CommparisonResult.Greater) ||
-      (this.comparedTo(comparator) === CommparisonResult.Equal)
+      (this.comparedTo(comparator) === BDCompare.Greater) ||
+      (this.comparedTo(comparator) === BDCompare.Equal)
     );
   }
 
-  lessThan(comparator: NumberInput): boolean {
-    return (this.comparedTo(comparator) === CommparisonResult.Less);
+  lessThan(comparator: BDNumberInput): boolean {
+    return (this.comparedTo(comparator) === BDCompare.Less);
   }
 
-  lessThanOrEqualTo(comparator: NumberInput): boolean {
+  lessThanOrEqualTo(comparator: BDNumberInput): boolean {
     return (
-      (this.comparedTo(comparator) === CommparisonResult.Less) ||
-      (this.comparedTo(comparator) === CommparisonResult.Equal)
+      (this.comparedTo(comparator) === BDCompare.Less) ||
+      (this.comparedTo(comparator) === BDCompare.Equal)
     );
   }
 
   /**
    * Shortforms
    */
-  add(operand: NumberInput): BigDenary {
+  add(operand: BDNumberInput): BigDenary {
     return this.plus(operand);
   }
 
-  sub(operand: NumberInput): BigDenary {
+  sub(operand: BDNumberInput): BigDenary {
     return this.minus(operand);
   }
 
-  mul(operand: NumberInput): BigDenary {
+  mul(operand: BDNumberInput): BigDenary {
     return this.multipliedBy(operand);
   }
 
-  div(operand: NumberInput): BigDenary {
+  div(operand: BDNumberInput): BigDenary {
     return this.dividedBy(operand);
   }
 
@@ -243,27 +239,31 @@ export default class BigDenary {
     return this.absoluteValue();
   }
 
-  cmp(comparator: NumberInput): CommparisonResult {
+  cmp(comparator: BDNumberInput): BDCompare {
     return this.comparedTo(comparator);
   }
 
-  eq(comparator: NumberInput): boolean {
+  eq(comparator: BDNumberInput): boolean {
     return this.equals(comparator);
   }
 
-  gt(comparator: NumberInput): boolean {
+  gt(comparator: BDNumberInput): boolean {
     return this.greaterThan(comparator);
   }
 
-  gte(comparator: NumberInput): boolean {
+  gte(comparator: BDNumberInput): boolean {
     return this.greaterThanOrEqualTo(comparator);
   }
 
-  lt(comparator: NumberInput): boolean {
+  lt(comparator: BDNumberInput): boolean {
     return this.lessThan(comparator);
   }
 
-  lte(comparator: NumberInput): boolean {
+  lte(comparator: BDNumberInput): boolean {
     return this.lessThanOrEqualTo(comparator);
   }
+}
+
+function _isBigDenaryRaw(input: BigDenaryRaw): input is BigDenaryRaw {
+  return true;
 }
