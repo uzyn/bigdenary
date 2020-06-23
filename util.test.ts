@@ -25,8 +25,9 @@ Deno.test("getDecimals() with number input", () => {
 });
 
 Deno.test("countTrailingZeros()", () => {
-  assertEquals(countTrailingZeros(0n), 0);
-  assertEquals(countTrailingZeros(5213522323n), 0);
-  assertEquals(countTrailingZeros(52113500000n), 5);
-  assertEquals(countTrailingZeros(-9846515000000000000000n), 15);
+  assertEquals(countTrailingZeros(0n, 100), 0);
+  assertEquals(countTrailingZeros(5213522323n, 100), 0);
+  assertEquals(countTrailingZeros(52113500000n, 100), 5);
+  assertEquals(countTrailingZeros(-9846515000000000000000n, 100), 15);
+  assertEquals(countTrailingZeros(-9846515000000000000000n, 10), 10);
 });

@@ -99,8 +99,10 @@ export default class BigDenary {
   }
 
   trimTrailingZeros(): void {
-    const trailingZerosCount = countTrailingZeros(this.base);
-    this.scaleDecimalsTo(Math.max(this.decimals - trailingZerosCount, 0));
+    const trailingZerosCount = countTrailingZeros(this.base, this.decimals);
+    if (trailingZerosCount > 0) {
+      this.scaleDecimalsTo(this.decimals - trailingZerosCount);
+    }
   }
 
   /**
