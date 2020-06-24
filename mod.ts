@@ -124,8 +124,12 @@ export class BigDenary {
         BigDenary.getDecimalMultiplier(_decimals - this._decimals);
     } else if (_decimals < this._decimals) {
       const adjust = this._decimals - _decimals;
-      this.base = this.base /
-        BigDenary.getDecimalMultiplier(this._decimals - _decimals);
+      const multiplier = BigDenary.getDecimalMultiplier(adjust);
+      const remainder = this.base % multiplier;
+      this.base = this.base / multiplier;
+      if (remainder * 2n >= multiplier) {
+        this.base += 1n;
+      }
     }
     this._decimals = _decimals;
   }

@@ -128,21 +128,25 @@ Deno.test("Decimals - scale down", () => {
   assertEquals(bd.decimals, 4);
   assertEquals(bd.toString(), "12345678.1468");
 
+  bd = new BigDenary("12345678.1468");
   bd.scaleDecimalsTo(4);
   assertEquals(bd.base, 123456781468n);
   assertEquals(bd.decimals, 4);
   assertEquals(bd.toString(), "12345678.1468");
 
+  bd = new BigDenary("12345678.1468");
   bd.scaleDecimalsTo(3);
-  assertEquals(bd.base, 12345678146n);
+  assertEquals(bd.base, 12345678147n);
   assertEquals(bd.decimals, 3);
-  assertEquals(bd.toString(), "12345678.146");
+  assertEquals(bd.toString(), "12345678.147"); // round up
 
+  bd = new BigDenary("12345678.1468");
   bd.scaleDecimalsTo(1);
   assertEquals(bd.base, 123456781n);
   assertEquals(bd.decimals, 1);
   assertEquals(bd.toString(), "12345678.1");
 
+  bd = new BigDenary("12345678.1468");
   bd.scaleDecimalsTo(0);
   assertEquals(bd.base, 12345678n);
   assertEquals(bd.decimals, 0);
@@ -269,7 +273,7 @@ Deno.test("add()", () => {
     "123802.748443211",
   );
   second.scaleDecimalsTo(1);
-  assertEquals(start.plus(second).toString(), "123802.689");
+  assertEquals(start.plus(second).toString(), "123802.789");
 
   // Number input
   assertEquals(start.plus(2.5).toString(), "123459.289");
