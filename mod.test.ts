@@ -1,6 +1,7 @@
 import {
   assertEquals,
   assertThrows,
+  assert,
 } from "https://deno.land/std/testing/asserts.ts";
 import { BigDenary } from "./mod.ts";
 
@@ -289,15 +290,28 @@ Deno.test("multipliedBy()", () => {
   assertEquals(start.multipliedBy(2).toString(), "246913.578");
   assertEquals(start.multipliedBy(-1).toString(), "-123456.789");
   assertEquals(start.multipliedBy("1.49").toString(), "183950.61561");
+  assertEquals(
+    start.multipliedBy("0.67114093959").toString(),
+    "82856.905369127516778523",
+  );
 });
 
 Deno.test("dividedBy()", () => {
-  const start = new BigDenary("123456.789");
+  let start = new BigDenary("123456.789");
   assertThrows(() => start.dividedBy(0), RangeError, "Division by zero");
   assertEquals(start.dividedBy(1).toString(), "123456.789");
   assertEquals(start.dividedBy(2).toString(), "61728.3945");
   assertEquals(start.dividedBy(-1).toString(), "-123456.789");
-  assertEquals(start.dividedBy("1.49").toString(), "828.56905369127516778523");
+  assertEquals(start.dividedBy("1.49").toString(), "82856.905369127516778523");
+
+  start = new BigDenary("525");
+  assertEquals(start.dividedBy("1945.12654984").toString(), "0.269905318007");
+  start = new BigDenary("8");
+  assertEquals(start.dividedBy("0.5").toString(), "16");
+  start = new BigDenary("8.684");
+  assertEquals(start.dividedBy("0.05").toString(), "173.68");
+  start = new BigDenary("8.684");
+  assertEquals(start.dividedBy("1.05564").toString(), "8.22628926527983");
 });
 
 Deno.test("negated()", () => {
