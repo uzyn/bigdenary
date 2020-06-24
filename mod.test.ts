@@ -291,8 +291,8 @@ Deno.test("multipliedBy()", () => {
   assertEquals(start.multipliedBy(-1).toString(), "-123456.789");
   assertEquals(start.multipliedBy("1.49").toString(), "183950.61561");
   assertEquals(
-    start.multipliedBy("0.67114093959").toString(),
-    "82856.905369127516778523",
+    start.multipliedBy(1 / 1.49).toString(),
+    "82856.9053691275246499295",
   );
 });
 

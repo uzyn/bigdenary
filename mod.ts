@@ -123,6 +123,7 @@ export class BigDenary {
       this.base = this.base *
         BigDenary.getDecimalMultiplier(_decimals - this._decimals);
     } else if (_decimals < this._decimals) {
+      const adjust = this._decimals - _decimals;
       this.base = this.base /
         BigDenary.getDecimalMultiplier(this._decimals - _decimals);
     }
