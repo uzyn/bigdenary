@@ -219,12 +219,13 @@ Deno.test("valueOf()", () => {
 
 Deno.test("toFixed()", () => {
   assertEquals(new BigDenary("12345678.1468").toFixed(), "12345678.1468");
-  assertEquals(new BigDenary("12345678.1468").toFixed(2), "12345678.14");
+  assertEquals(new BigDenary("12345678.1468").toFixed(2), "12345678.15");
   assertEquals(new BigDenary("12345678.1468").toFixed(5), "12345678.14680");
   assertEquals(new BigDenary("12").toFixed(5), "12.00000");
   assertEquals(new BigDenary("0.1234").toFixed(5), "0.12340");
   assertEquals(new BigDenary("-0.1234").toFixed(2), "-0.12");
   assertEquals(new BigDenary("-0.1234").toFixed(5), "-0.12340");
+  assertEquals(new BigDenary("-0.1234898").toFixed(5), "-0.12349");
 });
 
 Deno.test("trimTrailingZeros()", () => {

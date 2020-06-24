@@ -1,4 +1,9 @@
-import { countTrailingZeros, extractExp, getDecimals } from "./util.ts";
+import {
+  bigIntAbs,
+  countTrailingZeros,
+  extractExp,
+  getDecimals,
+} from "./util.ts";
 
 export interface BigDenaryRaw {
   base: bigint;
@@ -92,23 +97,12 @@ export class BigDenary {
   }
 
   toFixed(digits?: number): string {
-    const str = this.toString();
-    if (!digits || digits < 0) {
-      return str;
+    if (!digits) {
+      return this.toString();
     }
-
-    const decimals = getDecimals(str);
-
-    if (digits === decimals) {
-      return str;
-    } else if (digits > decimals) {
-      const addZeros = _strOfZeros(digits - decimals);
-      if (this._decimals === 0) {
-        return `${str}.${addZeros}`;
-      }
-      return `${str}${addZeros}`;
-    }
-    return str.substr(0, str.length - (decimals - digits));
+    const temp = new BigDenary(this);
+    temp.scaleDecimalsTo(digits);
+    return temp.toString();
   }
 
   get decimals(): number {
@@ -127,8 +121,12 @@ export class BigDenary {
       const multiplier = BigDenary.getDecimalMultiplier(adjust);
       const remainder = this.base % multiplier;
       this.base = this.base / multiplier;
-      if (remainder * 2n >= multiplier) {
-        this.base += 1n;
+      if (bigIntAbs(remainder * 2n) >= multiplier) {
+        if (this.base >= 0) {
+          this.base += 1n;
+        } else {
+          this.base -= 1n;
+        }
       }
     }
     this._decimals = _decimals;

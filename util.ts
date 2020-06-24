@@ -1,3 +1,10 @@
+export function bigIntAbs(n: bigint): bigint {
+  if (n >= 0n) {
+    return n;
+  }
+  return n * -1n;
+}
+
 export function getDecimals(n: number | string): number {
   if (isNaN(n as any)) {
     throw new Error("InvalidNumber");
